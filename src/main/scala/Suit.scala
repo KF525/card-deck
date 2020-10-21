@@ -2,7 +2,6 @@ package Suit
 
 import SuitColor.SuitColor
 
-
 enum Suit(color: SuitColor) {
   def suitColor = color
   

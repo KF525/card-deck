@@ -16,12 +16,16 @@ object Deck {
     (deckRemainder, hand)
   }
   
-  def pickACardAnyCard(d: deck): Card = d(Random.nextInt(d.size))
+  def pickACardAnyCard(d: deck): (deck, Card) = {
+    val card: Card = d(Random.nextInt(d.size))
+    val deckRemainder: deck = d.filter(c => c != card)
+    (deckRemainder, card)
+  }
   
-  def generateCards(suit: Suit) = List[rank](2,3,4,5,6,7,8,9,10,Jack,Queen,King)
-    .map(r => generateCard(r: rank, suit))
-  
-  def generateCard(rank: rank, suit: Suit): Card = Card(rank, suit)
+  def generateCards(suit: Suit) = {
+    val ranks: List[rank]  = PipCard.values.toList ::: FaceCard.values.toList
+    ranks.map(r => Card(r, suit))
+  }
   
   def build: deck = Suit.values.
     foldLeft(List.empty[Card])((d: List[Card],s: Suit) => d ::: generateCards(s))

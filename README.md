@@ -1,4 +1,4 @@
-## sbt project compiled with Dotty
+## card-deck
 
 ### Usage
 
