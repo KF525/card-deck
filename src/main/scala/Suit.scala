@@ -2,9 +2,7 @@ package Suit
 
 import SuitColor.SuitColor
 
-enum Suit(color: SuitColor) {
-  def suitColor = color
-  
+enum Suit(val color: SuitColor) {
   case Diamond extends Suit(SuitColor.Red)
   case Heart extends Suit(SuitColor.Red)
   case Club extends Suit(SuitColor.Black)

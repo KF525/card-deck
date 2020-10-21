@@ -19,6 +19,8 @@ object Main {
     println(hand2)
     println("-pick-a-card----------------")
     println(card)
+    println("-card's color---------------")
+    println(card.suit.color)
     println("-number of cards in remaining deck------------")
     println(deck3.size)
   }
