@@ -1,55 +1,54 @@
 import org.junit.Test
-import org.junit.Assert._
-import Rank.FaceCard._
-import Deck.deck
-import Rank.PipCard._
-import Suit.Suit._
+import org.junit.Assert.{assertEquals, _}
+import card.Rank.PipCard._
+import card.Rank.FaceCard._
+import card.Card
+import card.Suit._
+import _root_.deck.Deck
+import hand._
 
 import scala.util.Random
 
 class DeckTest {
   @Test def build(): Unit = {
-    assertEquals(52, Deck.build.size)
+    assertEquals(52, Deck.build.cards.size)
   }
 
   @Test def deal(): Unit = {
-    val d: deck = Deck.build
-    val (rd, h) = Deck.deal(d, 2)
-    assertEquals(2, h.size)
+    val deck: Deck = Deck.build
+    val (remainingDeck, hand) = Deck.deal(deck, 2).right.get
+    assertEquals(2, hand.cards.size)
+    assertEquals(50, remainingDeck.cards.size)
   }
-  
+
   @Test def dealHandSizeZero(): Unit = {
-    val d: deck = List(Card(Ace, Heart), Card(Two, Heart))
-    val (rd, h) = Deck.deal(d, 0)
-    assertEquals(0, h.size)
-    assertEquals(List.empty[Card], h)
-    assertEquals(2, rd.size)
+    val deck: Deck = Deck(List(Card(Ace, Heart), Card(Two, Heart)))
+    val zeroHand = Deck.deal(deck, 0)
+    assertTrue(zeroHand.isLeft)
   }
-  
+
   @Test def dealHandEqualsDeck(): Unit = {
-    val d: deck = List(Card(Ace, Heart), Card(Two, Heart))
-    val (rd, h) = Deck.deal(d, 2)
-    assertEquals(2, h.size)
-    assertEquals(0, rd.size)
-    assertEquals(List.empty[Card], rd)
+    val deck = Deck(List(Card(Ace, Heart), Card(Two, Heart)))
+    val (remainingDeck, hand) = Deck.deal(deck, 2).right.get
+    assertEquals(2, hand.cards.size)
+    assertEquals(0, remainingDeck.cards.size)
   }
-  
+
   @Test def dealHandLargerThanDeck(): Unit = {
-    // Currently it just takes as many as are in the deck to create hand and deck is empty
-    val d: deck = List(Card(Ace, Heart), Card(Two, Heart))
-    val (rd, h) = Deck.deal(d, 3)
-    assertEquals(2, h.size)
-    assertEquals(0, rd.size)
+    val deck = Deck(List(Card(Ace, Heart), Card(Two, Heart)))
+    val inSufficientDeck = Deck.deal(deck, 3)
+    assertTrue(inSufficientDeck.isLeft)
   }
   
   @Test def pickCard(): Unit = {
-    val d: deck = List(Card(Ace, Heart), Card(Two, Heart))
-    val (rd, card) = Deck.pickACardAnyCard(d)
-    //TODO: Assertions
+    val deck = Deck(List(Card(Two, Heart)))
+    val (remainingDeck, card) = Deck.pickACardAnyCard(deck).right.get
+    assertEquals(0, remainingDeck.cards.size)
+    assertEquals(Card(Two, Heart), card)
   }
   
   @Test def pickCardWhenDeckEmpty(): Unit = {
-    val (rd, card) = Deck.pickACardAnyCard(Nil)
-    //TODO: Assertions
+    val noCards = Deck.pickACardAnyCard(Deck(List()))
+    assertTrue(noCards.isLeft)
   }
 }

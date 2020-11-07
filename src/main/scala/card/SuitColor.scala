@@ -1,4 +1,4 @@
-package SuitColor
+package card
 
 enum SuitColor {
   case Red, Black

@@ -1,6 +1,4 @@
-package Suit
-
-import SuitColor.SuitColor
+package card
 
 enum Suit(val color: SuitColor) {
   case Diamond extends Suit(SuitColor.Red)
