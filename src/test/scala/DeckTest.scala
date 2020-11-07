@@ -51,4 +51,22 @@ class DeckTest {
     val noCards = Deck.pickACardAnyCard(Deck(List()))
     assertTrue(noCards.isLeft)
   }
+  
+  @Test def draw(): Unit = {
+    val deck: Deck = Deck(List(Card(Three, Spade), 
+      Card(Four, Heart), Card(Five, Heart), Card(Nine, Diamond)))
+    val hand: Hand = Hand(List(Card(Ace, Heart)))
+    val Right(remainingDeck, newHand) = Deck.draw(deck, hand)
+    assertEquals(4, deck.cards.size)
+    assertEquals(3, remainingDeck.cards.size)
+    assertEquals(1, hand.cards.size)
+    assertEquals(2, newHand.cards.size)
+  }
+
+  @Test def drawWhenDeckEmpty(): Unit = {
+    val deck: Deck = Deck(List())
+    val hand: Hand = Hand(List(Card(Ace, Heart)))
+    val noDraw = Deck.draw(deck, hand)
+    assertTrue(noDraw.isLeft)
+  }
 }

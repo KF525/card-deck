@@ -38,8 +38,14 @@ object Deck {
   
   def pickACardAnyCard(deck: Deck): Either[String, (Deck, Card)] = {
     Cards.pickACardAnyCard(deck.cards) match {
-      case Right((remainingDeck, card)) => Right(Deck(remainingDeck),card)
+      case Right((remainingDeck, card)) => Right((Deck(remainingDeck),card))
       case Left(ex) => Left(ex)
     }
   }
+
+  def draw(deck: Deck, hand: Hand): Either[String,(Deck, Hand)] =
+    Cards.draw(deck.cards, hand.cards) match {
+      case Right((remainingDeck, newHand)) => Right((Deck(remainingDeck), Hand(newHand)))
+      case Left(ex) => Left(ex)
+    }
 }
