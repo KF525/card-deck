@@ -1,11 +1,13 @@
-import org.junit.Test
-import org.junit.Assert.{assertEquals, _}
-import card.Rank.PipCard._
-import card.Rank.FaceCard._
+package deck
+
+import deck.Deck
 import card.Card
+import card.Rank.FaceCard._
+import card.Rank.PipCard._
 import card.Suit._
-import _root_.deck.Deck
 import hand._
+import org.junit.Assert.{assertEquals, _}
+import org.junit.Test
 
 import scala.util.Random
 
